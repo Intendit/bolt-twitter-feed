@@ -32,8 +32,8 @@ class TwitterFeedExtension extends SimpleExtension
         $app = $this->getContainer();
 
         // Get values from config
-        $config = $this->getConfig();
-
+        $extensionConfig = $this->getConfig();
+        $config = $app['config']->get('general');
         // Set our request method
         $requestMethod = 'GET';
 
@@ -48,7 +48,7 @@ class TwitterFeedExtension extends SimpleExtension
         $header = array($this->buildHeaderString($oauth));
 
         $key = 'usertimeline-'.md5($fullUrl);
-        if ($app['cache']->contains($key) && $config['cache_time'] > 0) {
+        if ($app['cache']->contains($key) && $extensionConfig['cache_time'] > 0) {
           // If this request has been cached and setting is not disabling cache, then retrieve it
           $result = $app['cache']->fetch($key);
         } else {
@@ -60,7 +60,7 @@ class TwitterFeedExtension extends SimpleExtension
           }
           // Decode the JSON that is returned
           $result = json_decode($result, true);
-          $app['cache']->save($key, $result, $config['cache_time']);
+          $app['cache']->save($key, $result, $extensionConfig['cache_time']);
         }
 
         return $result;
@@ -76,7 +76,8 @@ class TwitterFeedExtension extends SimpleExtension
         $app = $this->getContainer();
 
         // Get values from config
-        $config = $this->getConfig();
+        $extensionConfig = $this->getConfig();
+        $config = $app['config']->get('general');
 
         // Set our request method
         $requestMethod = 'GET';
@@ -92,7 +93,7 @@ class TwitterFeedExtension extends SimpleExtension
         $header = array($this->buildHeaderString($oauth));
 
         $key = 'friendslist-'.md5($fullUrl);
-        if ($app['cache']->contains($key) && $config['cache_time'] > 0) {
+        if ($app['cache']->contains($key) && $extensionConfig['cache_time'] > 0) {
           // If this request has been cached and setting is not disabling cache, then retrieve it
           $result = $app['cache']->fetch($key);
         } else {
@@ -104,7 +105,7 @@ class TwitterFeedExtension extends SimpleExtension
           }
           // Decode the JSON that is returned
           $result = json_decode($result, true);
-          $app['cache']->save($key, $result, $config['cache_time']);
+          $app['cache']->save($key, $result, $extensionConfig['cache_time']);
         }
 
         return $result;
@@ -120,7 +121,8 @@ class TwitterFeedExtension extends SimpleExtension
         $app = $this->getContainer();
 
         // Get values from config
-        $config = $this->getConfig();
+        $extensionConfig = $this->getConfig();
+        $config = $app['config']->get('general');
 
         // Set our request method
         $requestMethod = 'GET';
@@ -136,7 +138,7 @@ class TwitterFeedExtension extends SimpleExtension
         $header = array($this->buildHeaderString($oauth));
 
         $key = 'followerslist-'.md5($fullUrl);
-        if ($app['cache']->contains($key) && $config['cache_time'] > 0) {
+        if ($app['cache']->contains($key) && $extensionConfig['cache_time'] > 0) {
           // If this request has been cached and setting is not disabling cache, then retrieve it
           $result = $app['cache']->fetch($key);
         } else {
@@ -148,7 +150,7 @@ class TwitterFeedExtension extends SimpleExtension
           }
           // Decode the JSON that is returned
           $result = json_decode($result, true);
-          $app['cache']->save($key, $result, $config['cache_time']);
+          $app['cache']->save($key, $result, $extensionConfig['cache_time']);
         }
 
         return $result;
@@ -170,7 +172,8 @@ class TwitterFeedExtension extends SimpleExtension
         $app = $this->getContainer();
 
         // Get values from config
-        $config = $this->getConfig();
+        $extensionConfig = $this->getConfig();
+        $config = $app['config']->get('general');
 
         // Create a nonce for use with Oauth
         $nonce = base64_encode(random_bytes(16));
